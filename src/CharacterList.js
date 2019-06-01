@@ -7,30 +7,28 @@ class CharacterList extends React.Component {
     super(props);
     this.state = {
       data: [],
-    }
+    };
 
     this.onChange = this.onChange.bind(this);
     this.getResults = this.getResults.bind(this);
   }
 
   onChange(e) {
-    const throttledGetResults = throttle(this.getResults, 500);
+    const throttledGetResults = throttle(this.getResults, 300);
     throttledGetResults(e.target.value)
       .then((res) => {
         this.setState({ data: res.items });
       });
   }
 
-  getResults(query) {
-    if (!query) return Promise.resolve([]);
-    // const endpoint = `https://superheroapi.com/api/${process.env.ACCESS_KEY}`;
-    const endpoint = 'https://api.github.com/search/users';
-
-
-    const url = `${endpoint}?q=${query}`;
-    return fetch(url, { method: 'GET' })
-      .then(res => res.json())
-      .catch(err => console.warn('Error fetching data', err));
+  async getResults(query) {
+    try {
+      const url = `/search/${query}`;
+      const res = await fetch(url, { method: 'GET' });
+      return await res.json();
+    } catch (err) {
+      console.warn('Error fetching data', err);
+    }
   }
 
   render() {
@@ -57,7 +55,7 @@ class CharacterList extends React.Component {
           }
         </ul>
       </div>
-    )
+    );
   }
 }
 
