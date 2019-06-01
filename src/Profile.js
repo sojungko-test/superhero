@@ -1,24 +1,37 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
+import './Profile.css';
 
 const Profile = (props) => {
-  const { item } = props;
+  const { item, customTheme } = props;
   const {
-    login,
-    type,
-    score,
-    id,
-    url,
+    name,
+    powerstats,
+    // biography,
+    image,
   } = item;
 
+  const {
+    intelligence,
+    strength,
+    speed,
+    durability,
+    power,
+    combat,
+  } = powerstats;
+
   return (
-    <Card>
-      <p>Login: {login}</p>
-      <p>Type: {type}</p>
-      <p>Score: {score}</p>
-      <p>ID: {id}</p>
-      <p>URL: {url}</p>
-    </Card>
+    <div className={`Profile${customTheme ? ` Profile__${customTheme}` : ''}`}>
+      <img className="Profile-image" src={image.url} alt={name} />
+      <div className="Profile-stats">
+        <p className="Profile-name">{name}</p>
+        <p>Intelligence: {intelligence}</p>
+        <p>Strength: {strength}</p>
+        <p>Durability: {durability}</p>
+        <p>Speed: {speed}</p>
+        <p>Power: {power}</p>
+        <p>Combat: {combat}</p>
+      </div>
+    </div>
   );
 };
 

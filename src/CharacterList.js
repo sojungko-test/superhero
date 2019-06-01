@@ -1,5 +1,6 @@
 import React from 'react';
 import throttle from 'lodash.throttle';
+import './CharacterList.css';
 import Profile from './Profile';
 
 class CharacterList extends React.Component {
@@ -13,12 +14,12 @@ class CharacterList extends React.Component {
     this.getResults = this.getResults.bind(this);
   }
 
-  onChange(e) {
+  async onChange(e) {
     const throttledGetResults = throttle(this.getResults, 300);
-    throttledGetResults(e.target.value)
-      .then((res) => {
-        this.setState({ data: res.items });
-      });
+    const res = await throttledGetResults(e.target.value);
+    if (res && res.results) {
+      this.setState({ data: res.results });
+    }
   }
 
   async getResults(query) {
@@ -36,19 +37,27 @@ class CharacterList extends React.Component {
     const { callback, type, character } = this.props;
 
     return (
-      <div className="container">
-        <input onChange={this.onChange} />
+      <div className="CharacterList">
+        <input className="CharacterList-input" onChange={this.onChange} />
         {
-          character ? <Profile item={character} />
+          character ? (
+            <li className="CharacterList-item">
+              <Profile item={character} customTheme="selected" />
+            </li>
+          )
             : (
               <p>Please choose a {type}</p>
             )
         }
-        <ul>
+        <ul className="CharacterList-list">
           {
             data && data.filter(item => !!item) // type check
               .map((item, i) => (
-                <li key={i} onClick={() => callback(item)}>
+                <li
+                  className="CharacterList-item"
+                  key={i}
+                  onClick={() => callback(item)}
+                >
                   <Profile item={item} />
                 </li>
               ))

@@ -1,0 +1,26 @@
+.Profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.Profile__selected {
+  background-color: #fff200;
+}
+
+.Profile-image {
+  height: 87%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.Profile-stats {
+  width: 100%;
+  text-align: left;
+  margin: 15px 0;
+}
+
+.Profile-name {
+  color: #222;
+  font-size: 1rem;
+  font-weight: 500;
+}

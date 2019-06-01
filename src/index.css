@@ -15,3 +15,11 @@ code {
 ul, li {
   list-style-type: none;
 }
+
+p {
+  font-size: 0.9rem;
+  line-height: 1rem;
+  font-weight: 300;
+  margin: 8px;
+  color: #333333;
+}
