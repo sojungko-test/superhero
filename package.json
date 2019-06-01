@@ -2,8 +2,10 @@
   "name": "blackboard",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@material-ui/core": "^4.0.1",
+    "express": "^4.17.1",
     "lodash.throttle": "^4.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -11,6 +13,9 @@
   },
   "scripts": {
     "commit": "npx git-cz",
+    "dev": "concurrently \"npm run server:dev\" \"npm run start\"",
+    "server": "node server.js",
+    "server:dev": "nodemon server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -30,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.1"
   }
 }
