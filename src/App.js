@@ -1,6 +1,7 @@
 import React from 'react';
 import throttle from 'lodash.throttle';
-import logo from './logo.svg';
+import Card from '@material-ui/core/Card';
+// import logo from './logo.svg';
 import './App.css';
 
 class App extends React.Component {
@@ -27,26 +28,12 @@ class App extends React.Component {
   render() {
     const { hero, villain } = this.state;
     return (
-      <div className='App'>
-        <PowerStat character={hero} type='hero'/>
-        <PowerStat character={villain} type='villain' />         
-        <List callback={this.setHero} type='hero'/>
-        <List callback={this.setVillain} type='villain'/>
+      <div className='App'>     
+        <List character={hero} callback={this.setHero} type='hero'/>
+        <List character={villain} callback={this.setVillain} type='villain'/>
       </div>
     );
 
-  }
-}
-
-function PowerStat({ character, type }) {
-  if (character) {
-    return (
-      <Profile item={character} />
-    )
-  } else {
-    return (
-      <p>Please choose a {type}</p>
-    )
   }
 }
 
@@ -83,12 +70,13 @@ class List extends React.Component {
 
   render() {
     const { data } = this.state;
-    const { callback, type } = this.props;
+    const { callback, type, character } = this.props;
 
     return (
       <div className='container'>
         <input onChange={this.onChange}>
         </input>
+        <PowerStat character={character} type={type} />
         <ul>
           {
             data && data.filter(item => !!item) // type check
@@ -104,6 +92,15 @@ class List extends React.Component {
       </div>  
     )
   }
+}
+
+function PowerStat({ character, type }) {
+  return character ? (
+    <Profile item={character} />
+  )
+    : (
+      <p>Please choose a {type}</p>
+    )
 }
 
 function ListItem(props) {
@@ -126,13 +123,13 @@ function Profile(props) {
   } = item
 
   return (
-    <ul>
-      <li>{login}</li>
-      <li>{type}</li>
-      <li>{score}</li>
-      <li>{id}</li>
-      <li>{url}</li>
-    </ul>
+    <Card>
+      <p>Login: {login}</p>
+      <p>Type: {type}</p>
+      <p>Score: {score}</p>
+      <p>ID: {id}</p>
+      <p>URL: {url}</p>
+    </Card>
   )
 }      
 
