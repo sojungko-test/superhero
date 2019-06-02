@@ -10,7 +10,15 @@ const characterSchema = new mongoose.Schema({
     power: { type: Number, default: 0 },
     combat: { type: Number, default: 0 },
   },
-  isGood: Boolean,
+  biography: {
+    fullName: String,
+    alterEgos: { type: [String], default: [] },
+    alias: { type: [String], default: [] },
+    placeOfBirth: String,
+    firstAppearance: String,
+    publisher: String,
+    alignment: String,
+  },
   image: String,
 });
 

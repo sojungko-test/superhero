@@ -7,7 +7,7 @@
     "commit": "npx git-cz",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:start\"",
     "db:setup": "node -r dotenv/config server-setup.js",
-    "server:start": "node server.js",
+    "server:start": "node -r dotenv/config server.js",
     "server:dev": "nodemon -r dotenv/config server.js",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",

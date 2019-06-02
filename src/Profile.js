@@ -6,7 +6,7 @@ const Profile = (props) => {
   const {
     name,
     powerstats,
-    // biography,
+    biography,
     image,
   } = item;
 

@@ -9,7 +9,7 @@ for (let i = 1; i < maxId + 1; i += 1) {
   (() => {
     setTimeout(() => {
       callApi(i);
-    }, 1000 * i);
+    }, 300 * i);
   })();
 }
 
@@ -28,6 +28,12 @@ async function callApi(i) {
         combat,
       },
       biography: {
+        full_name: fullName,
+        'alter-egos': alterEgos,
+        alias,
+        'place-of-birth': placeOfBirth,
+        'first-appearance': firstAppearance,
+        publisher,
         alignment,
       },
       image: {
@@ -45,14 +51,25 @@ async function callApi(i) {
         power: Number(power) || 0,
         combat: Number(combat) || 0,
       },
-      isGood: alignment === 'good',
+      biography: {
+        fullName,
+        alterEgos: Array.isArray(alterEgos) ? alterEgos : [],
+        alias: Array.isArray(alias) ? alias : [],
+        placeOfBirth,
+        firstAppearance,
+        publisher,
+        alignment,
+      },
       image: url,
     });
+
+    const charType = alignment === 'good' ? 'hero' : 'villain';
+
     newCharacter.save((err, newChar) => {
       if (err) {
-        console.log('error saving character', err);
+        console.log(`error saving ${charType}`, err);
       } else {
-        console.log('new character saved', newChar);
+        console.log(`new ${charType} saved`, newChar);
       }
     });
   } catch (err) {
