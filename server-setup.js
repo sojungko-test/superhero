@@ -7,7 +7,7 @@ const Character = require('./models/character');
 
 const superheroApi = `https://superheroapi.com/api/${process.env.ACCESS_TOKEN}`;
 const maxId = 731;
-const limit = pLimit(3);
+const limit = pLimit(1);
 
 function createPromises() {
   const urls = [];
@@ -44,6 +44,7 @@ async function callApi(url) {
     .then((resJson) => {
       console.log('resJson', resJson);
       const {
+        id,
         name,
         powerstats: {
           intelligence,
@@ -66,7 +67,9 @@ async function callApi(url) {
           url,
         },
       } = resJson;
+
       const newCharacter = new Character({
+        id: Number(id) || 0,
         name,
         powerstats: {
           intelligence: Number(intelligence) || 0,
@@ -87,17 +90,15 @@ async function callApi(url) {
         },
         image: url,
       });
+
       console.log('newChar', newCharacter);
       const charType = alignment === 'good' ? 'hero' : 'villain';
 
-      newCharacter.save((err, newChar) => {
-        if (err) {
-          console.log(`error saving ${charType}`, err);
-          return false;
-        }
-        console.log(`new ${charType} saved`, newChar);
-        return true;
-      });
+      return { newChar: newCharacter.save(), charType };
+    })
+    .then(({ charType }) => {
+      console.log(`new ${charType} saved`);
+      return true;
     })
     .catch((err) => {
       console.log('err', err);

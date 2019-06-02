@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
+const passport = require('passport');
 const fetch = require('node-fetch');
+
+const auth = require('./auth-middleware');
 const idRoutes = require('./id-routes');
 const db = require('./db/config');
 const Character = require('./models/character');
@@ -22,7 +25,8 @@ app.post('/auth', (req, res) => {
   // TODO: send response per result
 });
 
-// TODO: every request from here on out requires an auth middleware
+app.use(auth);
+
 app.get('/:id', idRoutes);
 
 app.get('/search/:q', async (req, res) => {

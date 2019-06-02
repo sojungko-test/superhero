@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const characterSchema = new mongoose.Schema({
+  id: Number,
   name: { type: String, required: true },
   powerstats: {
     intelligence: { type: Number, default: 0 },
