@@ -7,7 +7,8 @@ const sessionTokenSchema = new mongoose.Schema({
 });
 
 
-sessionTokenSchema.pre('save', () => {
+sessionTokenSchema.pre('save', function generateJwt(next) {
+  const sessionToken = this;
   return new Promise((resolve, reject) => {
     jwt.sign({ apiToken: this.apiToken }, 'shhhhhh', { algorithm: 'HS256' }, (err, jwt) => {
       if (err) {
@@ -15,7 +16,14 @@ sessionTokenSchema.pre('save', () => {
       }
       resolve(jwt);
     });
-  });
+  })
+    .then((jwt) => {
+      sessionToken.jwt = jwt;
+      next();
+    })
+    .catch((err) => {
+      console.log('error', err);
+    });
 });
 
 const SessionToken = mongoose.model('SessionToken', sessionTokenSchema);

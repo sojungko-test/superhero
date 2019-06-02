@@ -1,7 +1,7 @@
 
-import passport from 'passport';
-import { Strategy } from 'passport-http-bearer';
-import SessionToken from './models/session-token';
+const passport = require('passport');
+const { Strategy } = require('passport-http-bearer');
+const SessionToken = require('./models/session-token');
 
 passport.use(new Strategy((jwt, done) => {
   SessionToken.find({ jwt }, (err, token) => {
@@ -13,5 +13,4 @@ passport.use(new Strategy((jwt, done) => {
   });
 }));
 
-
-export default passport.authenticate('bearer', { session: false });
+module.exports = passport.authenticate('bearer', { session: false });

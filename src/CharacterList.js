@@ -24,8 +24,15 @@ class CharacterList extends React.Component {
 
   async getResults(query) {
     const { type } = this.props;
+    let alignment;
+
+    if (type === 'hero') {
+      alignment = 'good';
+    } else if (type === 'villain') {
+      alignment = 'bad';
+    }
     try {
-      const url = `/search/${query}?type=${type}`;
+      const url = `/search/${query}?alignment=${alignment}`;
       const res = await fetch(url, { method: 'GET' });
       return await res.json();
     } catch (err) {
