@@ -21,7 +21,7 @@ const Profile = (props) => {
 
   return (
     <div className={`Profile${customTheme ? ` Profile__${customTheme}` : ''}`}>
-      <img className="Profile-image" src={image.url} alt={name} />
+      <img className="Profile-image" src={image} alt={name} />
       <div className="Profile-stats">
         <p className="Profile-name">{name}</p>
         <p>Intelligence: {intelligence}</p>

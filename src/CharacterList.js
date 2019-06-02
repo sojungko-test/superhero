@@ -17,14 +17,15 @@ class CharacterList extends React.Component {
   async onChange(e) {
     const throttledGetResults = throttle(this.getResults, 300);
     const res = await throttledGetResults(e.target.value);
-    if (res && res.results) {
-      this.setState({ data: res.results });
+    if (res) {
+      this.setState({ data: res });
     }
   }
 
   async getResults(query) {
+    const { type } = this.props;
     try {
-      const url = `/search/${query}`;
+      const url = `/search/${query}?type=${type}`;
       const res = await fetch(url, { method: 'GET' });
       return await res.json();
     } catch (err) {
