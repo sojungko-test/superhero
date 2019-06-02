@@ -1,6 +1,6 @@
 .Profile {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
 }
 
 .Profile__selected {
@@ -9,8 +9,7 @@
 
 .Profile-image {
   height: 87%;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto;
 }
 
 .Profile-stats {
@@ -23,4 +22,5 @@
   color: #222;
   font-size: 1rem;
   font-weight: 500;
+  margin-bottom: 17px;
 }

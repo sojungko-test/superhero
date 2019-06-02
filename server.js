@@ -15,7 +15,7 @@ app.get('/search/:query', async (req, res) => {
   const { params: { query = '' } } = req;
   const resp = await fetch(`${superheroApi}/search/${query}`);
   const resJson = await resp.json();
-  // check for 2xx status
+  // TODO check for 2xx status
   res.status(200).send(resJson);
 });
 
