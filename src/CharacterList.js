@@ -2,6 +2,7 @@ import React from 'react';
 import throttle from 'lodash.throttle';
 import './CharacterList.css';
 import Profile from './Profile';
+import { getSessionToken } from './utils/local-storage';
 
 class CharacterList extends React.Component {
   constructor(props) {
@@ -33,7 +34,13 @@ class CharacterList extends React.Component {
     }
     try {
       const url = `/search/${query}?alignment=${alignment}`;
-      const res = await fetch(url, { method: 'GET' });
+      console.log('sessionToken', getSessionToken());
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getSessionToken()}`,
+        },
+      });
       return await res.json();
     } catch (err) {
       console.warn('Error fetching data', err);

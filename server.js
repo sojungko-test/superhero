@@ -1,8 +1,9 @@
 const express = require('express');
 const path = require('path');
 const fetch = require('node-fetch');
+const passport = require('passport');
 
-const auth = require('./auth-middleware');
+const jwtLoginStrategy = require('./auth-middleware');
 const idRoutes = require('./id-routes');
 const db = require('./db/config');
 const Character = require('./models/character');
@@ -41,20 +42,26 @@ app.post('/auth', (req, res) => {
                 apiToken,
               });
               newSessionToken.save()
-                .then((savedToken) => {
-                  console.log('savedToken', savedToken);
-                  res.status(200).send(sessionToken);
+                .select('-_id')
+                .then(({ jwt, apiToken }) => {
+                  res.status(200).send({
+                    sessionToken: jwt,
+                    apiToken,
+                  });
                 });
             } else {
-              console.log('sessionToken found', sessionToken);
-              res.status(200).send(sessionToken);
+              res.status(200).send({
+                sessionToken: sessionToken.jwt,
+                apiToken: sessionToken.apiToken,
+              });
             }
           });
       }
     });
 });
 
-app.use(auth);
+app.use(passport.initialize());
+passport.use('jwt', jwtLoginStrategy);
 
 app.get('/:id', idRoutes);
 

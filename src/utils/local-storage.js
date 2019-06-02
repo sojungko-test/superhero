@@ -1,4 +1,4 @@
-export function authenticateUser(sessionToken, apiToken) {
+export function authenticateUser({ sessionToken, apiToken }) {
   localStorage.setItem('sessionToken', sessionToken);
   localStorage.setItem('apiToken', apiToken);
 }

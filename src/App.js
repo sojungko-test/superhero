@@ -27,12 +27,11 @@ class App extends React.Component {
     this.setVillain = this.setVillain.bind(this);
   }
 
-  // componentWillMount() {
-  //   if (isUserAuthenticated()) {
-  //     const sessionToken = getSessionToken();
-  //     // check against api
-  //   }
-  // }
+  componentWillMount() {
+    if (isUserAuthenticated()) {
+      this.setState({ userIsLoggedIn: true });
+    }
+  }
 
 
   setHero(hero) {
@@ -53,7 +52,8 @@ class App extends React.Component {
         body: JSON.stringify({ apiToken }),
       });
       const resJson = await res.json();
-      console.log('resJson', resJson);
+      authenticateUser(resJson);
+      this.setState({ userIsLoggedIn: true });
     } catch (err) {
       console.warn('error logging in user', err);
     }
