@@ -24,6 +24,7 @@
     "no-console": "off",
     "consistent-return": "off",
     "no-loop-func": "off",
+    "no-use-before-define": "off",
     "react/no-array-index-key": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",

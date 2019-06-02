@@ -5,13 +5,14 @@
   "proxy": "http://localhost:3001",
   "scripts": {
     "commit": "npx git-cz",
-    "dev": "concurrently \"npm run server:dev\" \"npm run start\"",
-    "server": "node server.js",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:start\"",
+    "db:setup": "node -r dotenv/config server-setup.js",
+    "server:start": "node server.js",
     "server:dev": "nodemon -r dotenv/config server.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "client:start": "react-scripts start",
+    "client:build": "react-scripts build",
+    "client:test": "react-scripts test",
+    "client:eject": "react-scripts eject"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
