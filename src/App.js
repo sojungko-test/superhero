@@ -8,8 +8,7 @@ import {
   authenticateUser,
   isUserAuthenticated,
   deauthenticateUser,
-  getApiToken,
-  getSessionToken,
+  // getApiToken,
 } from './utils/local-storage';
 
 class App extends React.Component {
@@ -23,6 +22,7 @@ class App extends React.Component {
     };
 
     this.loginUser = this.loginUser.bind(this);
+    this.logoutUser = this.logoutUser.bind(this);
     this.setHero = this.setHero.bind(this);
     this.setVillain = this.setVillain.bind(this);
   }
@@ -59,14 +59,28 @@ class App extends React.Component {
     }
   }
 
+  logoutUser() {
+    deauthenticateUser();
+    this.setState({ userIsLoggedIn: false });
+  }
+
   render() {
     const { hero, villain, userIsLoggedIn } = this.state;
     return (
       <div className="App">
         {userIsLoggedIn ? (
           <React.Fragment>
-            <CharacterList character={hero} callback={this.setHero} type="hero" />
-            <CharacterList character={villain} callback={this.setVillain} type="villain" />
+            <button
+              className="App-button"
+              type="submit"
+              onClick={this.logoutUser}
+            >
+              Logout
+            </button>
+            <div className="App-list">
+              <CharacterList character={hero} callback={this.setHero} type="hero" />
+              <CharacterList character={villain} callback={this.setVillain} type="villain" />
+            </div>
           </React.Fragment>
         )
           : <Login loginUser={this.loginUser} />

@@ -34,7 +34,6 @@ class CharacterList extends React.Component {
     }
     try {
       const url = `/search/${query}?alignment=${alignment}`;
-      console.log('sessionToken', getSessionToken());
       const res = await fetch(url, {
         method: 'GET',
         headers: {

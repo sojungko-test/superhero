@@ -4,7 +4,7 @@ export function authenticateUser({ sessionToken, apiToken }) {
 }
 
 export function isUserAuthenticated() {
-  return localStorage.getItem('sessionToken') !== null;
+  return !!localStorage.getItem('sessionToken');
 }
 
 export function getApiToken() {
