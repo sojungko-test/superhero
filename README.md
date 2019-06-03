@@ -11,6 +11,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 3. `npm start` or `yarn start` to seed the database with legacy data and start both front-end and back-end servers.
 
+4. If you don't have a legacy access token and are too lazy to generate one, feel free to use mine in `.env` (this won't be accessible via Github).
+
 
 ## Notes
 
