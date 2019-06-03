@@ -3,11 +3,12 @@ const path = require('path');
 const passport = require('passport');
 const Debug = require('debug');
 
+require('../db/config');
+
 const jwtLoginStrategy = require('./passport/jwt');
 
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
-const db = require('../db/config');
 
 const app = express();
 const log = Debug('server:server');

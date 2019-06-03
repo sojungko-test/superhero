@@ -35,8 +35,8 @@
 * **Query Params**
   `alignment=['good'|'bad']`
 * **Headers**  
-  Content-Type: application/json
-  Authorization: Bearer <token>
+  `Content-Type: application/json`
+  `Authorization: Bearer <token>`
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  
@@ -55,8 +55,8 @@
   * **URL Params**
     `alignment=['good'|'bad']`
   * **Headers**
-    Content-Type: application/json
-    Authorization: Bearer <token>
+    `Content-Type: application/json`
+    `Authorization: Bearer <token>`
   * **Success Response:**  
   * **Code:** 200  
     **Content:**
@@ -75,8 +75,8 @@
   * **URL Params**
     `id=[integer]`
   * **Headers**
-    Content-Type: application/json
-    Authorization: Bearer <token>
+    `Content-Type: application/json`
+    `Authorization: Bearer <token>`
   * **Success Response:**  
   * **Code:** 200  
     **Content:**

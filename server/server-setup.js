@@ -3,8 +3,9 @@ const fetch = require('node-fetch');
 const pLimit = require('p-limit');
 const Debug = require('debug');
 
+require('../db/config');
+
 const log = Debug('server:server-setup');
-const db = require('../db/config');
 const Character = require('../models/character');
 
 const superheroApi = `https://superheroapi.com/api/${process.env.LEGACY_ACCESS_TOKEN}`;
