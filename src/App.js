@@ -51,7 +51,6 @@ class App extends React.Component {
         body: JSON.stringify({ apiToken }),
       });
       const resJson = await res.json();
-      console.log('resJson', resJson);
       authenticateUser(resJson.token);
       this.setState({ userIsLoggedIn: true });
     } catch (err) {

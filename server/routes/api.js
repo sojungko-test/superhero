@@ -1,40 +1,10 @@
 const express = require('express');
 
 const Character = require('../../models/character');
-const auth = require('../passport/jwt');
 
 const router = express.Router();
 
-router.use(auth);
-
 // all paths are relative to /api
-router.get('/:id', (req, res) => {
-  const { params: { id = '' } } = req;
-
-  Character.find({ id }, (err, result) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(result);
-    }
-  });
-});
-
-router.get('/:id/:queryType', (req, res) => {
-  const { params: { id = '', queryType = '' } } = req;
-
-  Character.find({ id })
-    .select(queryType)
-    .exec()
-    .then((result) => {
-      res.status(200).send(result);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
-});
-
-
 router.get('/search/:q', async (req, res) => {
   const { params: { q = '' }, query: { alignment = '' } } = req;
   Character.find({
@@ -62,6 +32,32 @@ router.get('/alignment/:alignment', async (req, res) => {
       res.status(200).send(chars);
     }
   });
+});
+
+router.get('/:id', (req, res) => {
+  const { params: { id = '' } } = req;
+
+  Character.find({ id }, (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(result);
+    }
+  });
+});
+
+router.get('/:id/:queryType', (req, res) => {
+  const { params: { id = '', queryType = '' } } = req;
+
+  Character.find({ id })
+    .select(queryType)
+    .exec()
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
 });
 
 

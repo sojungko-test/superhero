@@ -9,9 +9,7 @@ const router = express.Router();
 // all routes relative to /auth
 router.post('/', (req, res) => {
   const { body } = req;
-  console.log('body', body);
   const { apiToken } = body;
-  console.log('apiToken', apiToken);
   const superheroApi = `https://superheroapi.com/api/${apiToken}/1`;
 
   fetch(superheroApi)
@@ -23,7 +21,8 @@ router.post('/', (req, res) => {
       } else if (response === 'success') {
         User.find({ apiToken }).exec()
           .then((foundUser) => {
-            if (foundUser) {
+            console.log('foundUser', foundUser);
+            if (foundUser.length) {
               const { apiToken } = foundUser;
               const token = jwt.sign({ apiToken }, process.env.JWT_SECRET);
               console.log('found user token', token);
@@ -33,6 +32,7 @@ router.post('/', (req, res) => {
               newUser.save()
                 .then((savedUser) => {
                   const { apiToken } = savedUser;
+                  console.log('apiToken here', apiToken);
                   const token = jwt.sign({ apiToken }, process.env.JWT_SECRET);
                   console.log('new user token', token);
                   res.status(200).send({ token });
