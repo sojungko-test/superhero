@@ -12,6 +12,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 3. `npm start` or `yarn start` to seed the database with legacy data and start both front-end and back-end servers.
 
 
+## Notes
+
+If you wish to re-seed the database, you will have to do it manually by opening MongoDB on your terminal (this is mentioned in the Roadmap section below).
+- On MacOS, run `mongo`
+- `db.characters.drop()`
+
 
 ## Scripts
 
