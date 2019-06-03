@@ -11,8 +11,7 @@
     "server:dev": "nodemon -r dotenv/config server/server.js",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
-    "client:test": "react-scripts test",
-    "client:eject": "react-scripts eject"
+    "client:test": "react-scripts test"
   },
   "dependencies": {
     "debug": "^4.1.1",

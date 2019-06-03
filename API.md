@@ -40,7 +40,7 @@
 * **Success Response:**  
 * **Code:** 200  
   **Content:**  
-```json
+```
 [
   {<character_object>},
   {<character_object>},
@@ -60,7 +60,7 @@
   * **Success Response:**  
   * **Code:** 200  
     **Content:**
-```json
+```
 [
   {<character_object>},
   {<character_object>},
@@ -80,7 +80,7 @@
   * **Success Response:**  
   * **Code:** 200  
     **Content:**
-```json
+```
 {<character_object>}
 ```
 
@@ -96,7 +96,7 @@
   * **Success Response:**  
   * **Code:** 200  
     **Content:**
-```json
+```
 [
   {<character_object>},
   {<character_object>},
