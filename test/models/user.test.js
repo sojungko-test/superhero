@@ -2,11 +2,11 @@ const { expect } = require('chai');
 
 const User = require('../../models/user');
 
-describe('character', () => {
-  it('should be invalid if name is empty', (done) => {
+describe('User model', () => {
+  it('should be invalid if apiToken is empty', (done) => {
     const user = new User();
     user.validate((err) => {
-      expect(err.errors.name).to.exist;
+      expect(err.errors.apiToken).to.exist;
       done();
     });
   });
