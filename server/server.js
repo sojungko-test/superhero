@@ -34,7 +34,7 @@ app.use('/auth', authRoutes);
 app.use('/api', passport.authenticate('jwt', { session: false }), apiRoutes);
 
 // general server errors
-// IMPORTANT: need four arguments to work as error handler
+// IMPORTANT: requires four arguments to work as error handler
 app.use((err, req, res, next) => {
   log('server error:', err.stack);
 
