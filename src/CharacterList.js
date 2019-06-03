@@ -62,11 +62,11 @@ class CharacterList extends React.Component {
     const { callback, type, character } = this.props;
 
     return (
-      <div className="CharacterList">
+      <div className="CharacterList" data-attr="character-list">
         <input className="CharacterList-input" onChange={this.onChange} />
         {
           character ? (
-            <li className="CharacterList-item">
+            <li className="CharacterList-item" data-attr="character-list-chosen">
               <Profile item={character} customTheme="selected" />
             </li>
           )
@@ -74,12 +74,13 @@ class CharacterList extends React.Component {
               <p>Please choose a {type}</p>
             )
         }
-        <ul className="CharacterList-list">
+        <ul className="CharacterList-list" data-attr="character-list-ul">
           {
             data && !!data.length && data.filter(item => !!item) // type check
               .map((item, i) => (
                 <li
                   className="CharacterList-item"
+                  data-attr="character-list-li"
                   key={i}
                   onClick={() => callback(item)}
                 >

@@ -43,33 +43,8 @@ router.post('/', async (req, res) => {
       }
     }
   } catch (err) {
-    console.log('error fetching', err);
+    log('error fetching', err);
   }
-
-  // fetch(superheroApi)
-  //   .then(res => res.json())
-  //   .then((result = {}) => {
-  //     const { response, error } = result;
-  //     if (response === 'error') {
-  //       log('error authenticating user against legacy api', error);
-  //       res.status(400).send(error);
-  //     } else if (response === 'success') {
-  //       log('authenticated user against legacy api');
-  //       // TODO explore upsert options
-  //       User.findOne({ apiToken }).exec()
-  //         .then((foundUser) => {
-  //           if (foundUser) {
-  //           } else {
-  //             log('user not found');
-  //             const newUser = new User({ apiToken });
-  //             newUser.save()
-  //               .then((savedUser) => {
-  //                 log('saved new user', savedUser);
-  //               });
-  //           }
-  //         });
-  //     }
-  //   });
 });
 
 module.exports = router;

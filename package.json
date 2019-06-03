@@ -9,11 +9,9 @@
     "db:setup": "node -r dotenv/config server/server-setup.js",
     "server:start": "node -r dotenv/config server/server.js",
     "server:dev": "nodemon -r dotenv/config server/server.js",
-    "server:test": "jest server/*.test.js",
-    "models:test": "mocha test/*/*.test.js",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
-    "client:test": "react-scripts test"
+    "client:test": "mocha -r @babel/register -r test/enzyme-config.js 'test/src/*.test.js'"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -31,13 +29,21 @@
     "react-scripts": "3.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
     "chai": "^4.2.0",
     "concurrently": "^4.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
+    "jsdom": "^15.1.1",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "sinon": "^7.3.2",

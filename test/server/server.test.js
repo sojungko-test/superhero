@@ -1,11 +1,11 @@
 const fetch = require('node-fetch');
 const request = require('supertest');
 const Debug = require('debug');
-const app = require('../server/server');
+const app = require('../../server/server');
 
-const db = require('../db/config');
-const Character = require('../models/character');
-const User = require('../models/user');
+const db = require('../../db/config');
+const Character = require('../../models/character');
+const User = require('../../models/user');
 
 const log = Debug('test:server.test');
 
