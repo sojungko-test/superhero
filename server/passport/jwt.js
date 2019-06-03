@@ -8,17 +8,15 @@ module.exports = new Strategy({
   secretOrKey: process.env.JWT_SECRET,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 }, (jwtPayload, done) => {
-  log('jwt payload', jwtPayload);
+  log('extracted jwt payload', jwtPayload);
   const { apiToken } = jwtPayload;
-  log('apiToken', apiToken);
   User.findOne({ apiToken }, (err, user) => {
-    log('user', user);
     if (err) {
       log('error finding user based on api token', err);
       return done(err, false);
     }
     if (user) {
-      log('found user based on api token');
+      log('found user based on api token', user);
       return done(null, user);
     }
     log('no error but no user found based on api token');

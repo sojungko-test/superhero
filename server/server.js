@@ -31,16 +31,13 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 
 // authenticated routes
-app.use('/api',
-  passport.authenticate('jwt', { session: false }),
-  apiRoutes);
+app.use('/api', passport.authenticate('jwt', { session: false }), apiRoutes);
 
 // general server errors
-app.use((err, req, res) => {
-  log(`server error: ${err.stack}`);
+app.use((err, req, res, next) => {
+  log('server error:', err.stack);
 
-  res.status(500);
-  res.json({
+  res.status(500).send({
     error: 'server error',
   });
 });
