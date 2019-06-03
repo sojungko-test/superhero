@@ -15,11 +15,17 @@ class CharacterList extends React.Component {
     this.getResults = this.getResults.bind(this);
   }
 
+  // TODO componentDidUpdate - check for user being logged in second time
+
   async onChange(e) {
     const throttledGetResults = throttle(this.getResults, 300);
-    const res = await throttledGetResults(e.target.value);
-    if (res) {
-      this.setState({ data: res });
+    try {
+      const res = await throttledGetResults(e.target.value);
+      if (res) {
+        this.setState({ data: res });
+      }
+    } catch (err) {
+      console.warn('Error handling input change', err);
     }
   }
 
@@ -27,17 +33,22 @@ class CharacterList extends React.Component {
     const { type } = this.props;
     let alignment;
 
-    if (type === 'hero') {
-      alignment = 'good';
-    } else if (type === 'villain') {
-      alignment = 'bad';
+    switch (type) {
+      case 'hero':
+        alignment = 'good';
+        break;
+      case 'villain':
+        alignment = 'bad';
+        break;
+      default:
     }
+
     try {
       const url = `/api/search/${query}?alignment=${alignment}`;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${getToken()}`,
+          Authorization: `JWT ${getToken()}`,
         },
       });
       return await res.json();
@@ -65,7 +76,7 @@ class CharacterList extends React.Component {
         }
         <ul className="CharacterList-list">
           {
-            data && data.filter(item => !!item) // type check
+            data && !!data.length && data.filter(item => !!item) // type check
               .map((item, i) => (
                 <li
                   className="CharacterList-item"

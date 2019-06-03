@@ -1,7 +1,8 @@
 const express = require('express');
-
+const Debug = require('debug');
 const Character = require('../../models/character');
 
+const log = Debug('server:routes:api');
 const router = express.Router();
 
 // all paths are relative to /api
@@ -14,10 +15,10 @@ router.get('/search/:q', async (req, res) => {
     'biography.alignment': alignment,
   }, (err, chars) => {
     if (err) {
-      console.log('err', err);
+      log('error finding character', err);
       res.status(500).send(err);
     } else {
-      console.log('chars', chars.length);
+      log(`found ${chars.length} characters`);
       res.status(200).send(chars);
     }
   });
@@ -27,8 +28,10 @@ router.get('/alignment/:alignment', async (req, res) => {
   const { params: { alignment = '' } } = req;
   Character.find({ biography: { alignment } }, (err, chars) => {
     if (err) {
+      log('error finding characters based on alignment', err);
       res.status(500).send(err);
     } else {
+      log(`found ${alignment} characters`);
       res.status(200).send(chars);
     }
   });
@@ -39,8 +42,10 @@ router.get('/:id', (req, res) => {
 
   Character.find({ id }, (err, result) => {
     if (err) {
+      log('error finding character based on id', err);
       res.status(500).send(err);
     } else {
+      log(`found character of id ${id}`);
       res.status(200).send(result);
     }
   });
@@ -53,9 +58,11 @@ router.get('/:id/:queryType', (req, res) => {
     .select(queryType)
     .exec()
     .then((result) => {
+      log(`found the ${queryType} of character id ${id}`);
       res.status(200).send(result);
     })
     .catch((err) => {
+      log(`error finding ${queryType} of character id ${id}`);
       res.status(500).send(err);
     });
 });

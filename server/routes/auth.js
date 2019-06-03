@@ -1,7 +1,9 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
+const Debug = require('debug');
 
+const log = Debug('server:routes:auth');
 const User = require('../../models/user');
 
 const router = express.Router();
@@ -17,24 +19,32 @@ router.post('/', (req, res) => {
     .then((result = {}) => {
       const { response, error } = result;
       if (response === 'error') {
+        log('error authenticating user against legacy api', error);
         res.status(400).send(error);
       } else if (response === 'success') {
+        log('authenticated user against legacy api');
+        // TODO explore upsert options
         User.find({ apiToken }).exec()
           .then((foundUser) => {
-            console.log('foundUser', foundUser);
             if (foundUser.length) {
+              log('user is found', foundUser);
               const { apiToken } = foundUser;
-              const token = jwt.sign({ apiToken }, process.env.JWT_SECRET);
-              console.log('found user token', token);
+              const payload = { apiToken };
+              log('jwt payload', payload);
+              const token = jwt.sign(payload, process.env.JWT_SECRET);
+              log('sending token to found user');
               res.status(200).send({ token });
             } else {
+              log('user not found');
               const newUser = new User({ apiToken });
               newUser.save()
                 .then((savedUser) => {
+                  log('saved new user', savedUser);
                   const { apiToken } = savedUser;
-                  console.log('apiToken here', apiToken);
-                  const token = jwt.sign({ apiToken }, process.env.JWT_SECRET);
-                  console.log('new user token', token);
+                  const payload = { apiToken };
+                  log('jwt payload', payload);
+                  const token = jwt.sign(payload, process.env.JWT_SECRET);
+                  log('sending token to saved user');
                   res.status(200).send({ token });
                 });
             }

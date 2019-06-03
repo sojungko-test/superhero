@@ -32,6 +32,7 @@ class App extends React.Component {
     }
   }
 
+  // TODO componentDidUpdate
 
   setHero(hero) {
     this.setState({ hero });
