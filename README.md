@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-[API docs here](./API)
+[API docs here](./API.md)
 
 
 ## Get Started
