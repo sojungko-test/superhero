@@ -45,7 +45,7 @@ router.get('/alignment/:alignment', async (req, res) => {
 router.get('/:id', (req, res) => {
   const { params: { id = '' } } = req;
 
-  Character.find({ id }, (err, result) => {
+  Character.findOne({ id }, (err, result) => {
     if (err) {
       log('error finding character based on id', err);
       res.status(500).send(err);

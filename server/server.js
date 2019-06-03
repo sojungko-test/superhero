@@ -34,5 +34,15 @@ app.use('/api',
   passport.authenticate('jwt', { session: false }),
   apiRoutes);
 
+// general server errors
+app.use((err, req, res) => {
+  log(`server error: ${err.stack}`);
+
+  res.status(500);
+  res.json({
+    error: 'server error',
+  });
+});
+
 
 app.listen(process.env.PORT || 3001);
