@@ -15,10 +15,8 @@ class CharacterList extends React.Component {
     this.getResults = this.getResults.bind(this);
   }
 
-  // TODO componentDidUpdate - check for user being logged in second time
-
   async onChange(e) {
-    const throttledGetResults = throttle(this.getResults, 300);
+    const throttledGetResults = throttle(this.getResults, 500);
     try {
       const res = await throttledGetResults(e.target.value);
       if (res) {

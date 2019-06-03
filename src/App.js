@@ -33,8 +33,6 @@ class App extends React.Component {
     }
   }
 
-  // TODO componentDidUpdate
-
   setHero(hero) {
     this.setState({ hero });
   }
@@ -54,7 +52,11 @@ class App extends React.Component {
       });
       const resJson = await res.json();
       authenticateUser(resJson.token);
-      this.setState({ userIsLoggedIn: true });
+      this.setState({
+        userIsLoggedIn: true,
+        hero: null,
+        villain: null,
+      });
     } catch (err) {
       console.warn('error logging in user', err);
     }

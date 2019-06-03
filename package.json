@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001",
   "scripts": {
     "commit": "npx git-cz",
+    "start": "npm run db:setup && npm run dev",
     "dev": "concurrently --raw \"npm run server:dev\" \"npm run client:start\"",
     "db:setup": "node -r dotenv/config server/server-setup.js",
     "server:start": "node -r dotenv/config server/server.js",

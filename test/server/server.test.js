@@ -1,53 +1,35 @@
-// const mongoose = require('mongoose');
-// const chai = require('chai');
-
-// const { expect } = chai;
+const mongoose = require('mongoose');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const Debug = require('debug');
 // const request = require('supertest');
-// const Debug = require('debug');
+
+const { expect } = chai;
+const log = Debug('test:server.test');
+
 // const app = require('../../server/server');
 
-// // const db = require('../../db/config');
-// const Character = require('../../models/character');
-// const User = require('../../models/user');
+chai.use(chaiHttp);
 
-// const log = Debug('test:server.test');
+const userApiToken = { apiKey: process.env.LEGACY_ACCESS_TOKEN };
 
-// // chai.use(chaiHttp);
+describe('/GET /search/:query', function () {
+  this.timeout(10000);
+  before(function () {
+    log('before hook');
+    return mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true });
+  });
 
-// const userApiToken = { apiKey: process.env.LEGACY_ACCESS_TOKEN };
-// const authenticatedUser = request.agent(app);
+  after(function (done) {
+    log('after hook');
+    mongoose.connection.db.dropCollection('users', function () {
+      log('closing database');
+      mongoose.connection.close();
+      done();
+    });
+  });
 
-
-// xdescribe('', () => {
-//   // TODO before not being run before other tests
-//   before((done) => {
-//     mongoose.connect('mongodb://localhost:27017/test');
-//     const db = mongoose.connection;
-//     db.on('error', console.error.bind(console, 'connection error'));
-//     db.once('open', () => {
-//       console.log('We are connected to test database!');
-//       done();
-//     });
-//   });
-
-//   after((done) => {
-//     db.close();
-//   });
-//   // beforeEach(() => {
-//   //   authenticatedUser.post('/auth')
-//   //     .send(userApiToken)
-//   //     .end((err, res) => {
-//   //       console.log('before err', err);
-//   //       console.log('before res', res);
-//   //     });
-//   // });
-//   xdescribe('/GET search/:query', () => {
-//     authenticatedUser
-//       .get('/search/batman')
-//       .end((err, res) => {
-//         console.log('error here', err);
-//         // console.log('res', res);
-//         console.log('res.error', res.error);
-//       });
-//   });
-// });
+  xit('', function () {
+    log('test is running now');
+  });
+});
