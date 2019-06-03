@@ -6,7 +6,7 @@
   "scripts": {
     "commit": "npx git-cz",
     "start": "npm run db:setup && npm run dev",
-    "dev": "concurrently --raw \"npm run server:dev\" \"npm run client:start\"",
+    "dev": "concurrently --raw -k \"npm run server:dev\" \"npm run client:start\"",
     "db:setup": "node -r dotenv/config server/server-setup.js",
     "server:start": "node -r dotenv/config server/server.js",
     "server:dev": "nodemon -r dotenv/config server/server.js",

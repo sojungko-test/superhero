@@ -16,7 +16,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Notes
 
-**`db:setup` takes a while because I've only allowed one API call to be executed at a time. Increasing the concurrency count to 3 created a lot of API failures so decided to stick to 1.**
+**`db:setup` takes a while because I've only allowed one API call to be executed at a time.**
+Increasing the concurrency count to 3 created a lot of API failures so decided to stick to 1.
 
 If you wish to re-seed the database, you will have to do it manually by opening MongoDB on your terminal (this is mentioned in the Roadmap section below).
 - On MacOS, run `mongo`
