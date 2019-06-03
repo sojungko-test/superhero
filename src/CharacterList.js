@@ -48,7 +48,7 @@ class CharacterList extends React.Component {
       const res = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: `JWT ${getToken()}`,
+          Authorization: `Bearer ${getToken()}`,
         },
       });
       return await res.json();

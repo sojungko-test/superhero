@@ -24,19 +24,24 @@ router.get('/search/:q', async (req, res) => {
   });
 });
 
+// TODO validate alignment
 router.get('/alignment/:alignment', async (req, res) => {
   const { params: { alignment = '' } } = req;
-  Character.find({ biography: { alignment } }, (err, chars) => {
+  Character.find({
+    'biography.alignment': alignment,
+  }, (err, chars) => {
     if (err) {
       log('error finding characters based on alignment', err);
       res.status(500).send(err);
     } else {
       log(`found ${alignment} characters`);
+      console.log('chars', chars);
       res.status(200).send(chars);
     }
   });
 });
 
+// TODO validate id
 router.get('/:id', (req, res) => {
   const { params: { id = '' } } = req;
 
@@ -51,6 +56,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// TODO validate id, queryType
 router.get('/:id/:queryType', (req, res) => {
   const { params: { id = '', queryType = '' } } = req;
 

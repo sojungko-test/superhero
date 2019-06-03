@@ -6,7 +6,7 @@ const log = Debug('server:passport:jwt');
 
 module.exports = new Strategy({
   secretOrKey: process.env.JWT_SECRET,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 }, (jwtPayload, done) => {
   log('jwt payload', jwtPayload);
   const { apiToken } = jwtPayload;
