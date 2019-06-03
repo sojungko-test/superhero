@@ -12,6 +12,8 @@ const superheroApi = `https://superheroapi.com/api/${process.env.LEGACY_ACCESS_T
 const maxId = 731;
 const limit = pLimit(1);
 
+console.log('This is gonna take a while. Please feel free to go grab some coffee :)');
+
 function createPromises() {
   const urls = [];
   for (let i = 1; i < maxId + 1; i += 1) {
