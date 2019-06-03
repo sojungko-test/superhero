@@ -24,9 +24,9 @@ router.post('/', (req, res) => {
       } else if (response === 'success') {
         log('authenticated user against legacy api');
         // TODO explore upsert options
-        User.find({ apiToken }).exec()
+        User.findOne({ apiToken }).exec()
           .then((foundUser) => {
-            if (foundUser.length) {
+            if (foundUser) {
               log('user is found', foundUser);
               const { apiToken } = foundUser;
               const payload = { apiToken };

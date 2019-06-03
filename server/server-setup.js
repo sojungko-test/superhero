@@ -1,9 +1,11 @@
+const { promisify } = require('util');
 const fetch = require('node-fetch');
 const pLimit = require('p-limit');
-const { promisify } = require('util');
+const Debug = require('debug');
 
-const db = require('./db/config');
-const Character = require('./models/character');
+const log = Debug('server:server-setup');
+const db = require('../db/config');
+const Character = require('../models/character');
 
 const superheroApi = `https://superheroapi.com/api/${process.env.LEGACY_ACCESS_TOKEN}`;
 const maxId = 731;
@@ -15,7 +17,7 @@ function createPromises() {
     urls.push(`${superheroApi}/${i}`);
   }
   const promises = urls.map((url) => {
-    console.log('url', url);
+    log('pushing legacy url to array of urls', url);
     return limit(() => callApi(url));
   });
   return promises;
@@ -26,7 +28,7 @@ const asyncCreatePromises = promisify(createPromises);
 asyncCreatePromises()
   .then(promises => Promise.all(promises))
   .then((result) => {
-    console.log('result', result);
+    log('all done!', result);
   });
 
 async function fetchRetry(url, n) {
@@ -42,7 +44,7 @@ async function callApi(url) {
   return fetchRetry(url, 5)
     .then(res => res.json())
     .then((resJson) => {
-      console.log('resJson', resJson);
+      log('resJson', resJson);
       const {
         id,
         name,
@@ -91,16 +93,16 @@ async function callApi(url) {
         image: url,
       });
 
-      console.log('newChar', newCharacter);
+      log('newChar', newCharacter);
       const charType = alignment === 'good' ? 'hero' : 'villain';
 
       return { newChar: newCharacter.save(), charType };
     })
     .then(({ charType }) => {
-      console.log(`new ${charType} saved`);
+      log(`new ${charType} saved`);
       return true;
     })
     .catch((err) => {
-      console.log('err', err);
+      log('err', err);
     });
 }

@@ -46,3 +46,5 @@ app.use((err, req, res) => {
 
 
 app.listen(process.env.PORT || 3001);
+
+module.exports = app;

@@ -9,6 +9,8 @@
     "db:setup": "node -r dotenv/config server/server-setup.js",
     "server:start": "node -r dotenv/config server/server.js",
     "server:dev": "nodemon -r dotenv/config server/server.js",
+    "server:test": "jest server/*.test.js",
+    "models:test": "mocha test/*/*.test.js",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test"
@@ -29,13 +31,17 @@
     "react-scripts": "3.0.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
-    "nodemon": "^1.19.1"
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
+    "sinon": "^7.3.2",
+    "supertest": "^4.0.2"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  apiToken: String, // user's access token to legacy api
+  apiToken: { type: String, required: true }, // user's access token to legacy api
 });
 
 const User = mongoose.model('User', userSchema);
