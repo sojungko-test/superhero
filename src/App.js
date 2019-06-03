@@ -1,5 +1,4 @@
 import React from 'react';
-import jwt from 'jsonwebtoken';
 import CharacterList from './CharacterList';
 import Login from './Login';
 // import logo from './logo.svg';
@@ -9,7 +8,6 @@ import {
   authenticateUser,
   isUserAuthenticated,
   deauthenticateUser,
-  getToken,
 } from './utils/local-storage';
 
 class App extends React.Component {
@@ -28,19 +26,11 @@ class App extends React.Component {
     this.setVillain = this.setVillain.bind(this);
   }
 
+  // TODO need actual api call to check if token is valid
   componentWillMount() {
     if (isUserAuthenticated()) {
       this.setState({ userIsLoggedIn: true });
     }
-    // const token = getToken();
-    // if (token) {
-    //   try {
-    //     const rest = await fetch('/auth', {
-    //       method: 'POST',
-
-    //     })
-    //   }
-    // }
   }
 
   // TODO componentDidUpdate
@@ -82,7 +72,7 @@ class App extends React.Component {
         {userIsLoggedIn ? (
           <React.Fragment>
             <button
-              className="App-button"
+              className="App-logout"
               type="submit"
               onClick={this.logoutUser}
             >

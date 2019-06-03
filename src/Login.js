@@ -1,4 +1,5 @@
 import React from 'react';
+import './Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,13 +18,13 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <label>
+      <div className="Login">
+        <form onSubmit={this.onSubmit} className="Login-form">
+          <label className="Login-label">
             Enter your legacy access token to start
-            <input type="password" ref={this.inputRef} />
           </label>
-          <input type="submit" />
+          <input type="password" ref={this.inputRef} className="Login-password" />
+          <input type="submit" className="Login-submit" />
         </form>
       </div>
     );

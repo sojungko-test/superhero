@@ -1,0 +1,24 @@
+.Login {
+
+}
+
+.Login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.Login-password {
+  font-size: 0.8rem;
+  height: 1.5rem;
+  width: 300px;
+  align-self: center;
+  margin: 20px;
+}
+
+.Login-submit {
+  width: 100px;
+  align-self: center;
+  border-radius: 3px;
+  line-height: 1.5rem;
+  font-size: 0.8rem;
+}
