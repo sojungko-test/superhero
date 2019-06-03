@@ -5,7 +5,7 @@ const { promisify } = require('util');
 const db = require('./db/config');
 const Character = require('./models/character');
 
-const superheroApi = `https://superheroapi.com/api/${process.env.ACCESS_TOKEN}`;
+const superheroApi = `https://superheroapi.com/api/${process.env.LEGACY_ACCESS_TOKEN}`;
 const maxId = 731;
 const limit = pLimit(1);
 

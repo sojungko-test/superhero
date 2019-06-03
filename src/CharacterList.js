@@ -2,7 +2,7 @@ import React from 'react';
 import throttle from 'lodash.throttle';
 import './CharacterList.css';
 import Profile from './Profile';
-import { getSessionToken } from './utils/local-storage';
+import { getToken } from './utils/local-storage';
 
 class CharacterList extends React.Component {
   constructor(props) {
@@ -33,11 +33,11 @@ class CharacterList extends React.Component {
       alignment = 'bad';
     }
     try {
-      const url = `/search/${query}?alignment=${alignment}`;
+      const url = `/api/search/${query}?alignment=${alignment}`;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${getSessionToken()}`,
+          Authorization: `Bearer ${getToken()}`,
         },
       });
       return await res.json();

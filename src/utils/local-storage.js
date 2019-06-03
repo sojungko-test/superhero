@@ -1,21 +1,15 @@
-export function authenticateUser({ sessionToken, apiToken }) {
-  localStorage.setItem('sessionToken', sessionToken);
-  localStorage.setItem('apiToken', apiToken);
+export function authenticateUser(token) {
+  localStorage.setItem('token', token);
 }
 
 export function isUserAuthenticated() {
-  return !!localStorage.getItem('sessionToken');
-}
-
-export function getApiToken() {
-  return localStorage.getItem('apiToken');
+  return !!localStorage.getItem('token');
 }
 
 export function deauthenticateUser() {
-  localStorage.removeItem('sessionToken');
-  localStorage.removeItem('apiToken');
+  localStorage.removeItem('token');
 }
 
-export function getSessionToken() {
-  return localStorage.getItem('sessionToken');
+export function getToken() {
+  return localStorage.getItem('token');
 }

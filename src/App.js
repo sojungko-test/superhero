@@ -8,7 +8,6 @@ import {
   authenticateUser,
   isUserAuthenticated,
   deauthenticateUser,
-  // getApiToken,
 } from './utils/local-storage';
 
 class App extends React.Component {
@@ -52,7 +51,8 @@ class App extends React.Component {
         body: JSON.stringify({ apiToken }),
       });
       const resJson = await res.json();
-      authenticateUser(resJson);
+      console.log('resJson', resJson);
+      authenticateUser(resJson.token);
       this.setState({ userIsLoggedIn: true });
     } catch (err) {
       console.warn('error logging in user', err);

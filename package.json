@@ -6,9 +6,9 @@
   "scripts": {
     "commit": "npx git-cz",
     "dev": "concurrently \"npm run server:dev\" \"npm run client:start\"",
-    "db:setup": "node -r dotenv/config server-setup.js",
-    "server:start": "node -r dotenv/config server.js",
-    "server:dev": "nodemon -r dotenv/config server.js",
+    "db:setup": "node -r dotenv/config server/server-setup.js",
+    "server:start": "node -r dotenv/config server/server.js",
+    "server:dev": "nodemon -r dotenv/config server/server.js",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "client:test": "react-scripts test",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "debug": "^4.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.3",
