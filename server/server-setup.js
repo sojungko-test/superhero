@@ -10,19 +10,18 @@ const Character = require('../models/character');
 
 const superheroApi = `https://superheroapi.com/api/${process.env.LEGACY_ACCESS_TOKEN}`;
 const maxId = 731;
-const limit = pLimit(1);
+const limit = pLimit(1); // pass in concurrency
 
 console.log('This is gonna take a while. Please feel free to go grab some coffee :)');
 
 function createPromises() {
-  const urls = [];
+  const promises = [];
   for (let i = 1; i < maxId + 1; i += 1) {
-    urls.push(`${superheroApi}/${i}`);
+    const url = `${superheroApi}/${i}`;
+    const promise = limit(() => callApi(url));
+    promises.push(promise);
   }
-  const promises = urls.map((url) => {
-    log('pushing legacy url to array of urls', url);
-    return limit(() => callApi(url));
-  });
+  log(`${maxId} promises created`);
   return promises;
 }
 
@@ -32,6 +31,7 @@ asyncCreatePromises()
   .then(promises => Promise.all(promises))
   .then((result) => {
     log('all done!', result);
+    process.exit(0);
   });
 
 async function fetchRetry(url, n) {
@@ -47,8 +47,9 @@ async function callApi(url) {
   return fetchRetry(url, 5)
     .then(res => res.json())
     .then((resJson) => {
-      log('resJson', resJson);
       const {
+        response,
+        error,
         id,
         name,
         powerstats: {
@@ -62,7 +63,7 @@ async function callApi(url) {
         biography: {
           full_name: fullName,
           'alter-egos': alterEgos,
-          alias,
+          aliases,
           'place-of-birth': placeOfBirth,
           'first-appearance': firstAppearance,
           publisher,
@@ -72,6 +73,7 @@ async function callApi(url) {
           url,
         },
       } = resJson;
+      log(`api call ${response}!${error ? ` ${error}` : ''}`);
 
       const newCharacter = new Character({
         id: Number(id) || 0,
@@ -87,7 +89,7 @@ async function callApi(url) {
         biography: {
           fullName,
           alterEgos: Array.isArray(alterEgos) ? alterEgos : [],
-          alias: Array.isArray(alias) ? alias : [],
+          alias: Array.isArray(aliases) ? aliases : [],
           placeOfBirth,
           firstAppearance,
           publisher,
@@ -96,14 +98,13 @@ async function callApi(url) {
         image: url,
       });
 
-      log('newChar', newCharacter);
       const charType = alignment === 'good' ? 'hero' : 'villain';
-
-      return { newChar: newCharacter.save(), charType };
+      return newCharacter.save()
+        .then(newChar => ({ newChar, charType }));
     })
-    .then(({ charType }) => {
-      log(`new ${charType} saved`);
-      return true;
+    .then(({ newChar, charType }) => {
+      log(`new ${charType}, ${newChar.name}, of id ${newChar.id} saved`);
+      return newChar;
     })
     .catch((err) => {
       log('err', err);

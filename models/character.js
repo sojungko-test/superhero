@@ -14,7 +14,7 @@ const characterSchema = new mongoose.Schema({
   biography: {
     fullName: String,
     alterEgos: { type: [String], default: [] },
-    alias: { type: [String], default: [] },
+    aliases: { type: [String], default: [] },
     placeOfBirth: String,
     firstAppearance: String,
     publisher: String,
