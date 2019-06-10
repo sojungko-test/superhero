@@ -1,11 +1,10 @@
-const { promisify } = require('util');
 const fetch = require('node-fetch');
 const pLimit = require('p-limit');
 const Debug = require('debug');
 
-require('../db/config');
+const db = require('./config');
 
-const log = Debug('server:server-setup');
+const log = Debug('db:setup');
 const Character = require('../models/character');
 
 const superheroApi = `https://superheroapi.com/api/${process.env.LEGACY_ACCESS_TOKEN}`;
@@ -25,13 +24,28 @@ function createPromises() {
   return promises;
 }
 
-const asyncCreatePromises = promisify(createPromises);
-
-asyncCreatePromises()
+db.dropCollection('characters')
+  .then((dropped) => {
+    if (dropped) {
+      log('dropped characters collection');
+      return new Promise((resolve, reject) => {
+        const promises = createPromises();
+        if (promises.length) {
+          resolve(promises);
+        } else {
+          reject(new Error('Error creating promises'));
+        }
+      });
+    }
+    throw Error('error dropping characters collection');
+  })
   .then(promises => Promise.all(promises))
   .then((result) => {
-    log('all done!', result);
+    log(`all done! ${result.length} characters saved`);
     process.exit(0);
+  })
+  .catch((err) => {
+    log('ERROR : ', err);
   });
 
 async function fetchRetry(url, n) {
