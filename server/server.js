@@ -3,47 +3,64 @@ const path = require('path');
 const passport = require('passport');
 const Debug = require('debug');
 
-require('../db/config');
+const connectDb = require('../db/config');
 
 const jwtLoginStrategy = require('./passport/jwt');
 
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
 
-const app = express();
+const { PORT } = process.env;
+
 const log = Debug('server:server');
 
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+function createApp() {
+  const app = express();
 
-// serve static files
-app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.json()); // for parsing application/json
+  app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// initialize passport
-app.use(passport.initialize());
-passport.use('jwt', jwtLoginStrategy);
+  // serve static files
+  app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+  // initialize passport
+  app.use(passport.initialize());
+  passport.use('jwt', jwtLoginStrategy);
 
-// login routes
-app.use('/auth', authRoutes);
-
-// authenticated routes
-app.use('/api', passport.authenticate('jwt', { session: false }), apiRoutes);
-
-// general server errors
-// IMPORTANT: requires four arguments to work as error handler
-app.use((err, req, res, next) => {
-  log('server error:', err.stack);
-
-  res.status(500).send({
-    error: 'server error',
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
-});
 
+  // login routes
+  app.use('/auth', authRoutes);
 
-app.listen(process.env.PORT || 3001);
+  // authenticated routes
+  app.use('/api', passport.authenticate('jwt', { session: false }), apiRoutes);
 
-module.exports = app;
+  // general server errors
+  // IMPORTANT: requires four arguments to work as error handler
+  app.use((err, req, res, next) => {
+    log('server error:', err.stack);
+
+    res.status(500).send({
+      error: 'server error',
+    });
+  });
+  return app;
+}
+
+module.exports = {
+  createApp,
+  createServer({ port = PORT, cb = () => {} }) {
+  // connect to db first
+    connectDb()
+      .then(() => {
+        const app = createApp();
+
+        app.listen(port, () => {
+          log(`Server is listening on ${port}`);
+          cb();
+        });
+      });
+  },
+};

@@ -8,8 +8,8 @@
     "start": "npm run db:setup && npm run dev",
     "dev": "concurrently --raw -k \"npm run server:dev\" \"npm run client:start\"",
     "db:setup": "node -r dotenv/config db/setup.js",
-    "server:start": "node -r dotenv/config server/server.js",
-    "server:dev": "nodemon -r dotenv/config server/server.js",
+    "server:start": "node -r dotenv/config server/server-bootstrap.js",
+    "server:dev": "nodemon -r dotenv/config server/server-bootstrap.js",
     "client:start": "react-scripts start",
     "client:build": "react-scripts build",
     "test": "mocha -r dotenv/config -r @babel/register -r test/enzyme-config.js 'test/*/*.test.js'"
@@ -48,8 +48,7 @@
     "jsdom": "^15.1.1",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
-    "sinon": "^7.3.2",
-    "supertest": "^4.0.2"
+    "sinon": "^7.3.2"
   },
   "eslintConfig": {
     "extends": "react-app"
